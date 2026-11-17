@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150">
+  <rect width="200" height="150" fill="#eef2ee"/>
+  <g stroke="#9aa59c" stroke-width="4">
+    <path d="M70 30v-12M85 30v-12M100 30v-12M115 30v-12M130 30v-12"/>
+    <path d="M70 120v12M85 120v12M100 120v12M115 120v12M130 120v12"/>
+    <path d="M55 45h-12M55 60h-12M55 75h-12M55 90h-12M55 105h-12"/>
+    <path d="M145 45h12M145 60h12M145 75h12M145 90h12M145 105h12"/>
+  </g>
+  <rect x="55" y="30" width="90" height="90" rx="8" fill="#2f3a33"/>
+  <rect x="72" y="47" width="56" height="56" rx="4" fill="#c9ccc4"/>
+  <text x="100" y="80" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#2f3a33">CPU</text>
+</svg>

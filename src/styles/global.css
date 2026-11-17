@@ -1,0 +1,78 @@
+/* HostelRig base styles
+   colours: dark green for main actions, amber for highlights,
+   red / green / amber only for error / success / warning states */
+
+:root {
+  --green-900: #14532d;
+  --green-700: #1d6b3d;
+  --green-100: #e3efe6;
+  --amber: #f5b83d;
+  --amber-bg: #fff4d6;
+  --amber-text: #7a4b00;
+  --red: #b42318;
+  --red-bg: #fdecea;
+  --ok: #17663a;
+  --ok-bg: #e6f4ea;
+
+  --text: #1f2421;
+  --muted: #5b625d;
+  --border: #d5d9d3;
+  --bg: #f6f6f2;
+  --white: #ffffff;
+  --grey: #8a908b;
+
+  --radius: 8px;
+  --space: 16px;
+  --max-width: 1140px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: 1.9rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+a {
+  color: var(--green-700);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space);
+}
