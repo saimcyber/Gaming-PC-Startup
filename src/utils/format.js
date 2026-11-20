@@ -11,3 +11,8 @@ export function warrantyText(months) {
   }
   return `${months} months`
 }
+
+// "1 item" / "3 items"
+export function itemsText(count) {
+  return count === 1 ? '1 item' : `${count} items`
+}

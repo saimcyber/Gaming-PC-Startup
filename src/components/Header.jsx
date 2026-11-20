@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 
-function Header() {
+function Header({ cartCount }) {
   return (
     <header className="site-header">
       <a href="#main-content" className="skip-link">
@@ -20,6 +20,11 @@ function Header() {
             </li>
             <li>
               <NavLink to="/products">Parts</NavLink>
+            </li>
+            <li>
+              <NavLink to="/cart" aria-label={`Cart, ${cartCount} ${cartCount === 1 ? 'item' : 'items'}`}>
+                Cart <span className="cart-count">{cartCount}</span>
+              </NavLink>
             </li>
           </ul>
         </nav>

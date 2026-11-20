@@ -2,10 +2,12 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import ProductImage from '../components/ProductImage.jsx'
 import StockBadge from '../components/StockBadge.jsx'
 import LoadStatus from '../components/LoadStatus.jsx'
+import AddToCartPanel from '../components/AddToCartPanel.jsx'
 import usePageTitle from '../hooks/usePageTitle.js'
 import { formatPrice, warrantyText } from '../utils/format.js'
+import { getQtyInCart } from '../utils/cartHelpers.js'
 
-function ProductDetailsPage({ products, status, errorMessage, onRetry }) {
+function ProductDetailsPage({ products, status, errorMessage, onRetry, cart, onAdd }) {
   const { id } = useParams()
   const location = useLocation()
 
@@ -49,6 +51,9 @@ function ProductDetailsPage({ products, status, errorMessage, onRetry }) {
 
   const { name, brand, category, price, stock, image, summary, specs, socket, warrantyMonths } = product
 
+  // products currently in the cart (used for the socket warning)
+  const cartProducts = cart.map((line) => products.find((p) => p.id === line.id)).filter(Boolean)
+
   return (
     <div className="container page">
       <p className="breadcrumb">
@@ -86,6 +91,15 @@ function ProductDetailsPage({ products, status, errorMessage, onRetry }) {
               <dd>{stock === 0 ? 'None at the shop right now' : `${stock} at the shop`}</dd>
             </div>
           </dl>
+
+          {/* key={id} resets the quantity box when moving to another product */}
+          <AddToCartPanel
+            key={id}
+            product={product}
+            qtyInCart={getQtyInCart(cart, id)}
+            cartProducts={cartProducts}
+            onAdd={onAdd}
+          />
         </div>
       </article>
 

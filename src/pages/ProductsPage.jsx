@@ -4,8 +4,9 @@ import ProductCard from '../components/ProductCard.jsx'
 import LoadStatus from '../components/LoadStatus.jsx'
 import usePageTitle from '../hooks/usePageTitle.js'
 import { searchProducts, filterProducts, sortProducts, getCategories } from '../utils/productFilters.js'
+import { getQtyInCart } from '../utils/cartHelpers.js'
 
-function ProductsPage({ products, status, errorMessage, onRetry }) {
+function ProductsPage({ products, status, errorMessage, onRetry, cart, onAdd }) {
   usePageTitle('Parts')
 
   // search, category, stock filter and sort are all kept in the url.
@@ -111,7 +112,13 @@ function ProductsPage({ products, status, errorMessage, onRetry }) {
       ) : (
         <div className="product-grid">
           {results.map((product) => (
-            <ProductCard key={product.id} product={product} listSearch={listSearch} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              listSearch={listSearch}
+              qtyInCart={getQtyInCart(cart, product.id)}
+              onAdd={onAdd}
+            />
           ))}
         </div>
       )}

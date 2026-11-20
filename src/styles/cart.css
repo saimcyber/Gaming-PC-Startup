@@ -1,0 +1,353 @@
+/* add-to-cart panel, cart page, checkout form and confirmation */
+
+/* ---------- quantity control ---------- */
+
+.qty-input {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid #b9beb7;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.qty-input button {
+  width: 40px;
+  border: none;
+  background: var(--green-100);
+  color: var(--green-900);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qty-input button:disabled {
+  color: #9aa09a;
+  background: #eeeeec;
+  cursor: not-allowed;
+}
+
+.qty-input input,
+.qty-input output {
+  width: 56px;
+  border: none;
+  text-align: center;
+  font: inherit;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-input input[aria-invalid='true'] {
+  background: var(--red-bg);
+}
+
+/* ---------- details page panel ---------- */
+
+.cart-panel {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.cart-panel label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.panel-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.panel-unavailable {
+  margin: 0;
+  padding: 10px 12px;
+  background: #ececec;
+  border-radius: var(--radius);
+}
+
+.cart-panel .notice {
+  margin: 12px 0 0;
+}
+
+/* ---------- product card extras ---------- */
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.card-actions .btn {
+  margin-left: auto;
+}
+
+.in-cart-text {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--green-700);
+}
+
+.product-card.in-cart {
+  border-color: var(--green-700);
+  box-shadow: 0 0 0 1px var(--green-700);
+}
+
+/* ---------- header cart count ---------- */
+
+.cart-count {
+  display: inline-block;
+  min-width: 22px;
+  padding: 0 6px;
+  margin-left: 4px;
+  border-radius: 999px;
+  background: var(--amber);
+  color: var(--text);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* ---------- cart page ---------- */
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.cart-lines {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.cart-line {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) auto auto;
+  gap: 14px;
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.cart-line-problem {
+  border-color: var(--red);
+  border-left-width: 4px;
+}
+
+.cart-line-image .product-image {
+  border-radius: 4px;
+}
+
+.cart-line-image .image-fallback small {
+  display: none;
+}
+
+.cart-line-info p {
+  margin: 2px 0 0;
+}
+
+.cart-line-name {
+  font-weight: 700;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.cart-line-qty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.cart-line-total {
+  font-weight: 700;
+  margin: 0;
+  min-width: 90px;
+  text-align: right;
+}
+
+.summary-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+
+.summary-list {
+  margin: 0 0 12px;
+}
+
+.summary-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.summary-list dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.summary-total {
+  border-top: 2px solid var(--text);
+  margin-top: 6px;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.summary-items {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+
+.summary-items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.summary-items li span:last-child {
+  white-space: nowrap;
+}
+
+.summary-box .btn-block {
+  margin-top: 12px;
+}
+
+/* ---------- checkout form ---------- */
+
+.checkout-form fieldset {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin: 0 0 16px;
+}
+
+.checkout-form legend {
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0 6px;
+}
+
+.form-field {
+  margin-bottom: 14px;
+}
+
+.form-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.form-field .field-hint {
+  margin: 0 0 4px;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  padding: 10px;
+  font: inherit;
+  border: 1px solid #b9beb7;
+  border-radius: 6px;
+  background: var(--white);
+}
+
+.has-error input,
+.has-error select,
+.has-error textarea {
+  border: 2px solid var(--red);
+}
+
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #b9beb7;
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--white);
+}
+
+.radio-option input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+/* selected option gets a stronger border (works in chrome / edge / firefox) */
+.radio-option:has(input:checked) {
+  border: 2px solid var(--green-900);
+  background: var(--green-100);
+}
+
+.form-error-summary {
+  background: var(--red-bg);
+  border-left: 4px solid var(--red);
+  color: #6d1610;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  margin: 0 0 16px;
+}
+
+/* ---------- confirmation ---------- */
+
+.confirm-box {
+  background: var(--ok-bg);
+  border: 1px solid var(--ok);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.confirm-tag {
+  display: inline-block;
+  background: var(--ok);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 2px 10px;
+  border-radius: 999px;
+  margin: 0 0 10px;
+}
+
+.confirm-summary {
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 860px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+}
