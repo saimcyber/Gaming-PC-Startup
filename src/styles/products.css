@@ -220,3 +220,119 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- no results (problem 1 fix) ---------- */
+
+.no-results {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.no-results-label {
+  font-weight: 600;
+  margin: 16px 0 8px;
+}
+
+.filter-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  border: 1px solid var(--green-900);
+  border-radius: 999px;
+  background: var(--green-100);
+  color: var(--green-900);
+  cursor: pointer;
+}
+
+.chip:hover {
+  background: #d1e5d7;
+}
+
+.chip-count {
+  color: var(--muted);
+}
+
+.chip-plain {
+  background: var(--white);
+  border-color: #b9beb7;
+  color: var(--text);
+}
+
+.closest {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- sold out cards (problem 2 fix) ---------- */
+
+/* the card stays readable (no opacity on the text), only the photo is
+   greyed out and the border is dashed so it looks "not available" */
+.product-card.sold-out {
+  border-style: dashed;
+  border-color: #a9aea8;
+  background: #fafaf8;
+}
+
+.product-card.sold-out .product-image {
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+.sold-out-note {
+  margin: 12px 0 0;
+  padding: 7px 10px;
+  border-top: 1px dashed #a9aea8;
+  color: #4d4d4d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.limit-note {
+  margin-left: auto;
+  font-size: 0.88rem;
+  color: var(--amber-text);
+  font-weight: 600;
+}
+
+/* ---------- delivery box on the details page (problem 3 fix) ---------- */
+
+.delivery-box {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.delivery-box h2 {
+  font-size: 1.15rem;
+}
+
+.delivery-table {
+  font-size: 0.92rem;
+}
+
+.delivery-box .notice {
+  margin: 12px 0 0;
+}
+
+@media (max-width: 480px) {
+  .filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .details {
+    padding: 14px;
+  }
+}

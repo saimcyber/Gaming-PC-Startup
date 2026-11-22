@@ -12,12 +12,14 @@ function ProductCard({ product, listSearch, qtyInCart, onAdd }) {
   // can one more be added without breaking the quantity rule?
   const canAddOne = checkQuantity(qtyInCart + 1, stock).ok
 
-  let buttonText = 'Add to cart'
-  if (stock === 0) buttonText = 'Out of stock'
-  else if (!canAddOne) buttonText = 'Limit reached'
+  const soldOut = stock === 0
+
+  let cardClass = 'product-card'
+  if (soldOut) cardClass += ' sold-out'
+  else if (qtyInCart > 0) cardClass += ' in-cart'
 
   return (
-    <article className={qtyInCart > 0 ? 'product-card in-cart' : 'product-card'}>
+    <article className={cardClass}>
       <ProductImage imageKey={image} alt={name} category={category} />
       <div className="card-body">
         <p className="card-meta">
@@ -34,18 +36,29 @@ function ProductCard({ product, listSearch, qtyInCart, onAdd }) {
           <span className="price">{formatPrice(price)}</span>
           <StockBadge stock={stock} />
         </div>
-        <div className="card-actions">
-          {qtyInCart > 0 && <span className="in-cart-text">In your cart: {qtyInCart}</span>}
-          <button
-            type="button"
-            className="btn btn-primary btn-small"
-            onClick={() => onAdd(id, 1)}
-            disabled={!canAddOne}
-            aria-label={`${buttonText}: ${name}`}
-          >
-            {buttonText}
-          </button>
-        </div>
+
+        {/* Problem 2 from the reference sites: "Out of stock" looked exactly like
+            the Add to cart button. Here a sold-out part has no button at all,
+            just a plain line of text, so it can't be mistaken for one. */}
+        {soldOut ? (
+          <p className="sold-out-note">Can't be ordered right now</p>
+        ) : (
+          <div className="card-actions">
+            {qtyInCart > 0 && <span className="in-cart-text">In your cart: {qtyInCart}</span>}
+            {canAddOne ? (
+              <button
+                type="button"
+                className="btn btn-primary btn-small"
+                onClick={() => onAdd(id, 1)}
+                aria-label={`Add to cart: ${name}`}
+              >
+                Add to cart
+              </button>
+            ) : (
+              <span className="limit-note">Max per order reached</span>
+            )}
+          </div>
+        )}
       </div>
     </article>
   )

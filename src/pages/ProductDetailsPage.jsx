@@ -3,9 +3,11 @@ import ProductImage from '../components/ProductImage.jsx'
 import StockBadge from '../components/StockBadge.jsx'
 import LoadStatus from '../components/LoadStatus.jsx'
 import AddToCartPanel from '../components/AddToCartPanel.jsx'
+import DeliveryInfo from '../components/DeliveryInfo.jsx'
 import usePageTitle from '../hooks/usePageTitle.js'
 import { formatPrice, warrantyText } from '../utils/format.js'
-import { getQtyInCart } from '../utils/cartHelpers.js'
+import { getQtyInCart, getCartLines, getCartSummary } from '../utils/cartHelpers.js'
+import { checkQuantity } from '../rules/quantityRule.js'
 
 function ProductDetailsPage({ products, status, errorMessage, onRetry, cart, onAdd }) {
   const { id } = useParams()
@@ -53,6 +55,8 @@ function ProductDetailsPage({ products, status, errorMessage, onRetry, cart, onA
 
   // products currently in the cart (used for the socket warning)
   const cartProducts = cart.map((line) => products.find((p) => p.id === line.id)).filter(Boolean)
+  const qtyInCart = getQtyInCart(cart, id)
+  const { subtotal: cartSubtotal } = getCartSummary(getCartLines(cart, products))
 
   return (
     <div className="container page">
@@ -96,9 +100,15 @@ function ProductDetailsPage({ products, status, errorMessage, onRetry, cart, onA
           <AddToCartPanel
             key={id}
             product={product}
-            qtyInCart={getQtyInCart(cart, id)}
+            qtyInCart={qtyInCart}
             cartProducts={cartProducts}
             onAdd={onAdd}
+          />
+
+          <DeliveryInfo
+            price={price}
+            cartSubtotal={cartSubtotal}
+            canOrder={checkQuantity(qtyInCart + 1, stock).ok}
           />
         </div>
       </article>

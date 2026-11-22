@@ -5,7 +5,7 @@ import usePageTitle from '../hooks/usePageTitle.js'
 import deliveryAreas, { PICKUP_POINT } from '../data/deliveryAreas.js'
 import { getCartLines, getCartSummary, getCartProblems } from '../utils/cartHelpers.js'
 import { validateCheckout, getPickupDays } from '../utils/validateCheckout.js'
-import { getDeliveryCharge } from '../rules/deliveryRule.js'
+import { getDeliveryCharge, amountToFreeDelivery } from '../rules/deliveryRule.js'
 import { placeOrder } from '../api/placeOrder.js'
 import { formatPrice, itemsText } from '../utils/format.js'
 
@@ -297,6 +297,11 @@ function CheckoutPage({ products, status, errorMessage, onRetry, cart, onOrderPl
           </dl>
           {/* red only when the chosen area can't be served, not before they pick one */}
           <p className={area && !area.served ? 'field-error' : 'panel-hint'}>{delivery.message}</p>
+          {form.method === 'delivery' && delivery.fee > 0 && (
+            <p className="panel-hint">
+              Add {formatPrice(amountToFreeDelivery(subtotal))} more to your cart for free delivery.
+            </p>
+          )}
         </aside>
       </div>
     </div>

@@ -1,6 +1,8 @@
+import { useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import FilterBar from '../components/FilterBar.jsx'
 import ProductCard from '../components/ProductCard.jsx'
+import NoResults from '../components/NoResults.jsx'
 import LoadStatus from '../components/LoadStatus.jsx'
 import usePageTitle from '../hooks/usePageTitle.js'
 import { searchProducts, filterProducts, sortProducts, getCategories } from '../utils/productFilters.js'
@@ -16,6 +18,7 @@ function ProductsPage({ products, status, errorMessage, onRetry, cart, onAdd }) 
   const category = searchParams.get('cat') || ''
   const inStockOnly = searchParams.get('stock') === 'in'
   const sort = searchParams.get('sort') || 'featured'
+  const countRef = useRef(null)
 
   function updateParam(key, value, replace = false) {
     setSearchParams(
@@ -33,6 +36,26 @@ function ProductsPage({ products, status, errorMessage, onRetry, cart, onAdd }) 
 
   function clearAll() {
     setSearchParams({})
+    focusCount()
+  }
+
+  // the button that was clicked disappears with the empty state, so move
+  // keyboard focus to the "Showing X of Y" line instead of losing it
+  function focusCount() {
+    setTimeout(() => countRef.current?.focus(), 0)
+  }
+
+  // used by the "remove ..." buttons when nothing matches
+  function removeFilter(key) {
+    if (key === 'query') updateParam('q', '')
+    if (key === 'category') updateParam('cat', '')
+    if (key === 'inStockOnly') updateParam('stock', '')
+    focusCount()
+  }
+
+  function searchInstead(newQuery) {
+    updateParam('q', newQuery)
+    focusCount()
   }
 
   if (status !== 'ready') {
@@ -97,18 +120,23 @@ function ProductsPage({ products, status, errorMessage, onRetry, cart, onAdd }) 
         </p>
       )}
 
-      <p className="result-count" aria-live="polite">
+      <p className="result-count" aria-live="polite" tabIndex={-1} ref={countRef}>
         Showing {results.length} of {products.length} parts
       </p>
 
       {results.length === 0 ? (
-        <div className="status-box">
-          <h2>No parts match your search</h2>
-          <p>Try a shorter search or remove a filter.</p>
-          <button type="button" className="btn btn-secondary" onClick={clearAll}>
-            Clear search and filters
-          </button>
-        </div>
+        <NoResults
+          products={products}
+          query={query}
+          category={unknownCategory ? '' : category}
+          inStockOnly={inStockOnly}
+          onRemove={removeFilter}
+          onSearch={searchInstead}
+          onClearAll={clearAll}
+          listSearch={listSearch}
+          cart={cart}
+          onAdd={onAdd}
+        />
       ) : (
         <div className="product-grid">
           {results.map((product) => (

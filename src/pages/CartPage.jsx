@@ -4,7 +4,8 @@ import LoadStatus from '../components/LoadStatus.jsx'
 import usePageTitle from '../hooks/usePageTitle.js'
 import { getCartLines, getCartSummary, getCartProblems } from '../utils/cartHelpers.js'
 import { formatPrice } from '../utils/format.js'
-import { FREE_DELIVERY_FROM } from '../rules/deliveryRule.js'
+import { FREE_DELIVERY_FROM, amountToFreeDelivery } from '../rules/deliveryRule.js'
+import deliveryAreas from '../data/deliveryAreas.js'
 
 function CartPage({ products, status, errorMessage, onRetry, cart, onUpdateQty, onRemove }) {
   usePageTitle('Your cart')
@@ -36,6 +37,12 @@ function CartPage({ products, status, errorMessage, onRetry, cart, onUpdateQty, 
   const lines = getCartLines(cart, products)
   const { itemCount, subtotal } = getCartSummary(lines)
   const problems = getCartProblems(lines)
+  const stillNeeded = amountToFreeDelivery(subtotal)
+
+  // cheapest and dearest delivery fee, so the summary can show the range
+  const fees = deliveryAreas.filter((area) => area.served).map((area) => area.fee)
+  const lowestFee = Math.min(...fees)
+  const highestFee = Math.max(...fees)
 
   return (
     <div className="container page">
@@ -64,11 +71,24 @@ function CartPage({ products, status, errorMessage, onRetry, cart, onUpdateQty, 
               <dt>Subtotal</dt>
               <dd>{formatPrice(subtotal)}</dd>
             </div>
+            <div>
+              <dt>Delivery</dt>
+              <dd>
+                {stillNeeded === 0 ? 'Free' : `${formatPrice(lowestFee)} - ${formatPrice(highestFee)}`}
+              </dd>
+            </div>
           </dl>
-          <p className="panel-hint">
-            Delivery fee is added at checkout (pickup is free, delivery is free from{' '}
-            {formatPrice(FREE_DELIVERY_FROM)}).
-          </p>
+
+          {stillNeeded === 0 ? (
+            <p className="notice notice-success">
+              Your order is {formatPrice(FREE_DELIVERY_FROM)} or more, so delivery is free.
+            </p>
+          ) : (
+            <p className="notice notice-info">
+              Add <strong>{formatPrice(stillNeeded)}</strong> more for free delivery. Until then the fee depends on
+              your area (you pick it at checkout). Pickup from the shop is always free.
+            </p>
+          )}
 
           {problems.length > 0 ? (
             <div className="problem-box" role="alert">

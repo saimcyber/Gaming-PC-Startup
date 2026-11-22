@@ -351,3 +351,39 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* phones: image + name on the first row, quantity and total on the second */
+@media (max-width: 560px) {
+  .cart-line {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 10px 12px;
+  }
+
+  /* quantity on the left of the second row, line total on the right */
+  .cart-line-qty {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-direction: row;
+    gap: 14px;
+  }
+
+  .cart-line-total {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    min-width: 0;
+  }
+
+  .cart-line-problem .btn {
+    grid-column: 1 / -1;
+  }
+
+  .radio-option {
+    width: 100%;
+  }
+
+  .summary-box,
+  .checkout-form fieldset {
+    padding: 14px;
+  }
+}

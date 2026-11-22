@@ -44,6 +44,11 @@ function AddToCartPanel({ product, qtyInCart, cartProducts, onAdd }) {
         <p className="panel-unavailable">
           <strong>Out of stock.</strong> You can't order this part right now.
         </p>
+        <p>
+          <Link to={`/products?cat=${encodeURIComponent(product.category)}&stock=in`}>
+            See {product.category} parts that are in stock
+          </Link>
+        </p>
       </div>
     )
   }
