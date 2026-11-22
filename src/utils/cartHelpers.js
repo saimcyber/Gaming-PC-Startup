@@ -1,4 +1,4 @@
-import { checkQuantity } from '../rules/quantityRule.js'
+import { checkQuantity, getMaxAllowed } from '../rules/quantityRule.js'
 import { findSocketConflicts } from '../rules/compatibilityRule.js'
 
 // the cart only stores { id, qty }. this joins each line with the current
@@ -46,4 +46,44 @@ export function getCartProblems(lines) {
 export function getQtyInCart(cart, id) {
   const line = cart.find((item) => item.id === id)
   return line ? line.qty : 0
+}
+
+// A saved cart can go out of date (part removed, sold out, or less stock than
+// before). This lists what has to change so the cart follows the rules again.
+// Socket conflicts are NOT fixed here - the user has to choose which part to keep.
+export function planCartFixes(lines) {
+  const fixes = []
+
+  lines.forEach((line) => {
+    if (!line.product) {
+      fixes.push({ id: line.id, action: 'remove', message: `Remove "${line.id}" (no longer listed)` })
+      return
+    }
+
+    const { name, stock } = line.product
+    const max = getMaxAllowed(stock)
+
+    if (stock <= 0) {
+      fixes.push({ id: line.id, action: 'remove', message: `Remove ${name} (sold out)` })
+    } else if (line.qty > max) {
+      fixes.push({
+        id: line.id,
+        action: 'lower',
+        to: max,
+        message: `Lower ${name} from ${line.qty} to ${max}`,
+      })
+    }
+  })
+
+  return fixes
+}
+
+// returns a NEW cart with the fixes applied (the old array is not changed)
+export function applyCartFixes(cart, fixes) {
+  return cart
+    .filter((line) => !fixes.some((fix) => fix.id === line.id && fix.action === 'remove'))
+    .map((line) => {
+      const lower = fixes.find((fix) => fix.id === line.id && fix.action === 'lower')
+      return lower ? { ...line, qty: lower.to } : line
+    })
 }

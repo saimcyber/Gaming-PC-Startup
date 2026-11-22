@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import ProductImage from './ProductImage.jsx'
 import StockBadge from './StockBadge.jsx'
 import { formatPrice } from '../utils/format.js'
-import { checkQuantity } from '../rules/quantityRule.js'
+import { checkQuantity, MAX_PER_ORDER } from '../rules/quantityRule.js'
 
 // listSearch = the ?q=...&cat=... part of the list url, passed along so the
 // details page can link back to the same filtered list
@@ -13,6 +13,11 @@ function ProductCard({ product, listSearch, qtyInCart, onAdd }) {
   const canAddOne = checkQuantity(qtyInCart + 1, stock).ok
 
   const soldOut = stock === 0
+
+  // say WHY one more can't be added
+  let limitText = `Limit is ${MAX_PER_ORDER} per order`
+  if (qtyInCart > stock) limitText = `Only ${stock} left - lower it in your cart`
+  else if (qtyInCart >= stock) limitText = `All ${stock} in stock are in your cart`
 
   let cardClass = 'product-card'
   if (soldOut) cardClass += ' sold-out'
@@ -55,7 +60,7 @@ function ProductCard({ product, listSearch, qtyInCart, onAdd }) {
                 Add to cart
               </button>
             ) : (
-              <span className="limit-note">Max per order reached</span>
+              <span className="limit-note">{limitText}</span>
             )}
           </div>
         )}

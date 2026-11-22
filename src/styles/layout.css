@@ -200,3 +200,64 @@
     font-size: 1.6rem;
   }
 }
+
+/* ---------- demo controls in the footer (testing only) ---------- */
+
+.demo-controls {
+  margin-top: 20px;
+  border: 1px dashed #6b7369;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+}
+
+.demo-controls summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.demo-controls summary:focus-visible,
+.demo-controls input:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.demo-controls p {
+  margin: 10px 0;
+}
+
+.demo-controls label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.demo-controls input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  flex-shrink: 0;
+}
+
+.demo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-demo {
+  background: var(--amber);
+  color: var(--text);
+}
+
+.btn-demo-plain {
+  background: transparent;
+  color: #d9ddd7;
+  border-color: #6b7369;
+}
+
+.demo-saved {
+  color: var(--amber);
+}

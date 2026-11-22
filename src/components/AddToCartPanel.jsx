@@ -77,8 +77,16 @@ function AddToCartPanel({ product, qtyInCart, cartProducts, onAdd }) {
         {qtyInCart > 0 && <> · you already have {qtyInCart} in your cart</>}
       </p>
 
-      {canStillAdd <= 0 && (
+      {canStillAdd === 0 && (
         <p className="field-error">You already have the most you can order of this part.</p>
+      )}
+
+      {/* can happen with a saved cart after the stock went down */}
+      {canStillAdd < 0 && (
+        <p className="field-error">
+          Your cart has {qtyInCart} of these but you can only order {maxAllowed} now.{' '}
+          <Link to="/cart">Fix it in your cart</Link>
+        </p>
       )}
 
       {showError && canStillAdd > 0 && (

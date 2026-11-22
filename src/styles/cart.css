@@ -148,6 +148,11 @@
   border-left-width: 4px;
 }
 
+/* a removed part has no image, price or quantity - just text and a button */
+.cart-line.cart-line-missing {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
 .cart-line-image .product-image {
   border-radius: 4px;
 }
@@ -374,8 +379,8 @@
     min-width: 0;
   }
 
-  .cart-line-problem .btn {
-    grid-column: 1 / -1;
+  .cart-line.cart-line-missing {
+    grid-template-columns: 1fr;
   }
 
   .radio-option {
@@ -386,4 +391,33 @@
   .checkout-form fieldset {
     padding: 14px;
   }
+}
+
+/* ---------- saved cart that changed (edge case) ---------- */
+
+.cart-fixes {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber);
+  border-left-width: 6px;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  color: var(--text);
+}
+
+.cart-fixes h2 {
+  font-size: 1.15rem;
+}
+
+.cart-fixes ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+}
+
+.line-fix {
+  margin-top: 6px;
+}
+
+.cart-changed {
+  margin: 16px 0 0;
 }
