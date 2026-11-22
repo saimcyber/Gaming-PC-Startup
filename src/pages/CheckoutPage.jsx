@@ -258,10 +258,15 @@ function CheckoutPage({ products, status, errorMessage, onRetry, cart, onOrderPl
             </FormField>
           </fieldset>
 
+          {/* onMouseDown: without this, clicking here first blurs the field you were
+              typing in, its error message appears and pushes this button down
+              before the mouse is released, so the click was lost. Keyboard and
+              the submit itself are not affected. */}
           <button
             type="submit"
             className="btn btn-primary btn-large btn-block"
             disabled={placing || cartProblems.length > 0}
+            onMouseDown={(e) => e.preventDefault()}
           >
             {placing ? 'Placing order...' : `Place order (${formatPrice(total)})`}
           </button>
